@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Department Info";
+}
+
+@section scripts {
+
+    <script src="~/lib/angular.js/angular.js"></script>
+    <script type="text/javascript">
+        angular.module("DepartmentApp", []);
+    </script>
+    <script src="~/js/DepartmentController.js"></script>
+}
+
+<div class="container container-fluid" ng-app="DepartmentApp" ng-controller="DepartmentCtrl">
+    
+    <div class="table table-responsive col-xs-12">
+        <form name="frm" style="text-align:center">
+            <br />
+            <label style="font-size:xx-large">Medicare Hospital Limited</label>
+            <br />
+
+            <table>
+                <tr style="display:none">
+                    <td><label>Department ID</label></td>
+                    <td>
+                        <input type="text" readonly class="alert alert-info" style="width: 90%; height : 90%;" ng-model="departmentInfo.departmentID" />
+                    </td>
+                </tr>
+                <tr>
+
+                    <td><label>Name</label></td>
+                    <td>
+                        <input type="text" class="alert alert-info" name="name" style="width: 90%; height : 90%;" ng-model="departmentInfo.departmentName" required />
+                        <span ng-show="frm.name.$dirty && frm.name.$error.required">Name is required</span>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td><label>Seat</label></td>
+                    <td>
+                        <input type="text" name="seat" class="alert alert-info" style="width: 90%; height : 90%;" ng-model="departmentInfo.availableSeate" />
+                        @*<span ng-show="frm.seat.$dirty && frm.seat.$error.minlength&&frm.seat.$error.maxlength">Name is required</span>*@
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Status</label></td> 
+                    <td>
+                        <input type="checkbox" ng-model="departmentInfo.isActive" />
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button class="btn btn-success" ng-hide="departmentInfo.departmentID" ng-click="departmentInsert(departmentInfo)"><i class="glyphicon glyphicon-cloud-download"></i>Create</button>
+                        <button class="btn btn-success" ng-show="departmentInfo.departmentID" ng-click="updateConfirm(departmentInfo)"><i class="glyphicon glyphicon-refresh"></i>Update</button>
+                        <button class="btn btn-success" ng-show="departmentInfo.departmentID" ng-click="cancel()"><i class="glyphicon glyphicon-remove-sign"></i>Cancel</button>
+                    </td>
+                </tr>
+
+
+            </table>
+
+            
+            <br />
+            <br />
+            <label style="font-size:xx-large">About Department</label>
+            <br />
+            <label>Search: <input ng-model="searchText"></label>
+            <br />
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+
+                    <tr>
+                        <th>Department ID</th>
+                        <th>Department Name</th>
+                        <th>Available Seat</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in DepartmentArray | filter:searchText">
+                        <td>{{item.departmentID}}</td>
+                        <td>{{item.departmentName}}</td>
+                        <td>{{item.availableSeate}}</td>
+                        <td>{{item.isActive}}</td>
+
+
+                        <td>
+                            <a href="#" class="text-info" ng-click="updateStart(item)"><i class="glyphicon glyphicon-check">Edit</i></a>
+                            <a href="#" class="text-danger" ng-click="deleteInformation(item)"><i class="glyphicon glyphicon-trash">Delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+        @*<div div my-own-message>
+
+        </div>*@
+    </div>
+</div>

@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "Doctor Info";
+}
+
+@section scripts {
+    <script src="~/lib/angular.js/angular.js"></script>
+    <script type="text/javascript">
+        angular.module("DoctorApp", []);
+
+    </script>
+    <script src="~/js/DoctorController.js"></script>
+}
+
+<div class="container container-fluid" ng-app="DoctorApp" ng-controller="DoctorCtrl">
+    <div class="table table-responsive col-xs-12">
+        <form name="frm" width:90%">
+            <br />
+            <label style="font-size:xx-large">Doctor's Information</label>
+            <br />
+            <table>
+
+                <tr style="display:none">
+                    <td>
+                        <label>Doctor ID  </label>
+                    </td>
+                    <td>
+                        <input type="text" readonly class="alert alert-info" style=" height : 90%;" ng-model="doctorInfo.doctorID" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Name </label>
+
+                    </td>
+                    <td>
+                        <input type="text" name="name" class="alert alert-info" style=" height : 90%;" ng-model="doctorInfo.doctorName" required/>
+                        <span ng-show="frm.name.$dirty && frm.name.$error.required">Name is required</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Address</label>
+
+                    </td>
+                    <td>
+                        <input type="text" name="address" class="alert alert-info" style="height : 90%;" ng-model="doctorInfo.contactAddress" required />
+                        <span ng-show="frm.address.$dirty && frm.address.$error.required">Contact Address is required</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Email</label>
+
+                    </td>
+                    <td>
+                        <input type="email" class="alert alert-info" name="email" style=" height : 90%;" ng-model="doctorInfo.emailAddress" required />
+                        <span ng-show="frm.email.$dirty && frm.email.$error.required">Email is required</span>
+                        <span ng-show="frm.email.$dirty && frm.email.$error.email">Email is not valid</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Date</label>
+                    </td>
+                    <td>
+                        <input type="date" class="alert alert-info" style=" height : 90%;" ng-model="doctorInfo.joiningDate" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Salary</label>
+                    </td>
+                    <td>
+                        <input type="text" class="alert alert-info" style=" height : 90%;" ng-model="doctorInfo.salary" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Status</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" ng-model="doctorInfo.isActive" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Department</label>
+                    </td>
+                    <td>
+                        @*<select required name="doctorname" class="form-control" ng-click="getDepartmentList()" ng-model="doctorInfo.departmentID">
+                            <option value="">--Select Doctor--</option>
+                            <option ng-repeat="b in DepartmentArray " value="{{b.departmentID}}">{{b.departmentName}}</option>
+                        </select>*@
+                        <select required name="doctorname" class="form-group" ng-click="getDepartmentList()" ng-model="doctorInfo.departmentID" ng-options="b.departmentID as b.departmentName for b in DepartmentArray">
+                            
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-success" ng-hide="doctorInfo.doctorID" ng-click="doctorInsert(doctorInfo)"><i class="glyphicon glyphicon-cloud-download"></i>Create</button>
+                        <button class="btn btn-success" ng-show="doctorInfo.doctorID" ng-click="updateConfirm(doctorInfo)"><i class="glyphicon glyphicon-refresh"></i>Update</button>
+                        <button class="btn btn-success" ng-show="doctorInfo.doctorID" ng-click="cancel()"><i class="glyphicon glyphicon-remove-sign"></i>Cancel</button>
+
+                    </td>
+                    
+                </tr>
+
+            </table>
+            <br />
+            <br />
+            <label style="font-size:xx-large">About Doctor</label>
+            <br />
+            <label>Search: <input ng-model="searchText"></label>
+
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Doctor ID</th>
+                        <th>Doctor Name</th>
+                        <th>Contact Address</th>
+                        <th>Email </th>
+                        <th>Joining Date </th>
+                        <th>Salary</th>
+                        <th>Status </th>
+                        <th>Department ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in DoctorArray | filter:searchText">
+                        <td>{{item.doctorID}}</td>
+                        <td>{{item.doctorName}}</td>
+                        <td>{{item.contactAddress}}</td>
+                        <td>{{item.emailAddress}}</td>
+                        <td>{{item.joiningDate}}</td>
+                        <td>{{item.salary}}</td>
+                        <td>{{item.isActive}}</td>
+                        <td>{{item.departmentID}}</td>
+                        <td>
+                            <a href="#" class="text-info" ng-click="updateStart(item)"><i class="glyphicon glyphicon-check">Edit</i></a>
+                            <a href="#" class="text-danger" ng-click="deleteInformation(item)"><i class="glyphicon glyphicon-trash">Delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+
+    <span style="color:red">{{msg}}</span><br />
+
+</div>

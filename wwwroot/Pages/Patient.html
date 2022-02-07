@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html ng-app="PatientApp">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../lib/angular.js/angular.js"></script>
+    <script src="../js/PatientController.js"></script>
+</head>
+<body>
+    <div ng-controller="PatientCtrl">
+        <div my-own-message>
+
+        </div>
+        <div>
+            <h2 style="color:grey; text-align:center; border:1px solid">Patient Information</h2>
+            <table class="table table-responsive col-xs-12">
+
+                <tr>                                         
+                    <td>
+                        <input type="text" hidden ng-model="objPatient.id" />
+                        <label>Name</label>
+                    </td>
+                    <td>
+                    <input type="text" class="form-control" placeholder="Enter name" ng-model="objPatient.name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Address</label>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="Enter address" ng-model="objPatient.address" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Cell Phone</label>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="Enter cellphone" ng-model="objPatient.cellPhone" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Date</label>
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" placeholder="Enter date" ng-model="objPatient.date" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button ng-click="SavePatient()">Save</button>
+                        <button ng-click="UpdatePatient()">Update</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <br />
+            <label>Search: <input ng-model="searchText"></label>
+            <table class="table">
+                <tr style="background-color:gray; color:white;">
+                    <td>ID</td>
+                    <td>Patient's Name</td>
+                    <td>Address</td>
+                    <td>CellPhone</td>
+                    <td>Date</td>
+                    <td>Action</td>
+                </tr>
+                <tr ng-repeat="p in PatientList | filter:searchText">
+                    <td>{{p.id}}</td>
+                    <td>{{p.name}}</td>
+                    <td>{{p.address}}</td>
+                    <td>{{p.cellPhone}}</td>
+                    <td>{{p.date}}</td>
+                    <td>
+                        <button ng-click="EditPatient(p)">Edit</button>
+                        <button ng-click="DeletePatient(p.id)">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
